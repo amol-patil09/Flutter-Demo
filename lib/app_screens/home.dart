@@ -6,9 +6,18 @@ class Home extends StatelessWidget {
     return Center(
       child: Container(
         alignment: Alignment.center,
-        color: Colors.lightBlueAccent,
-        child: Text("Flight", textDirection: TextDirection.ltr,
-        style: TextStyle(color: Colors.black, fontSize: 20),),
+        color: Colors.white,
+        child: Text(
+          "Flight",
+          textDirection: TextDirection.ltr,
+          style: TextStyle(
+              color: Colors.black,
+              fontSize: 50.0,
+              fontFamily: 'Poppins',
+              fontWeight: FontWeight.w700,
+              fontStyle: FontStyle.normal,
+              decoration: TextDecoration.none),
+        ),
       ),
     );
   }
