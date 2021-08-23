@@ -9,7 +9,29 @@ void main() => runApp(MaterialApp(
         title: Text("Long List"),
       ),
       body: getListView(),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        tooltip: 'Add one more item',
+        onPressed: () {},
+      ),
     )));
+
+void showSnackBar(BuildContext context, String item) {
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    content: Text('You just tapped $item'),
+    action: SnackBarAction(
+      label: "Undo",
+      onPressed: () {
+        Fluttertoast.showToast(
+            msg: "Undo ${item}",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            textColor: Colors.white,
+            backgroundColor: Colors.lightBlue);
+      },
+    ),
+  ));
+}
 
 List<String> getListElements() {
   var items = List<String>.generate(100, (index) => "Item ${index}");
@@ -25,10 +47,13 @@ Widget getListView() {
         leading: Icon(Icons.arrow_right),
         title: Text(listItems[index]),
         onTap: () {
-          Fluttertoast.showToast(
+          /*Fluttertoast.showToast(
               msg: "${listItems[index]} was tapped",
               toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.SNACKBAR);
+              gravity: ToastGravity.SNACKBAR,
+              textColor: Colors.white,
+              backgroundColor: Colors.lightBlue);*/
+          showSnackBar(context, listItems[index]);
         },
       );
     },
