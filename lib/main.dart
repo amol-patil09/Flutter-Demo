@@ -1,62 +1,50 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 void main() => runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     title: "Exploring UI Widgets",
-    home: Scaffold(
-      appBar: AppBar(
-        title: Text("Long List"),
-      ),
-      body: getListView(),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        tooltip: 'Add one more item',
-        onPressed: () {},
-      ),
-    )));
+    home: FavoriteCity()));
 
-void showSnackBar(BuildContext context, String item) {
-  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-    content: Text('You just tapped $item'),
-    action: SnackBarAction(
-      label: "Undo",
-      onPressed: () {
-        Fluttertoast.showToast(
-            msg: "Undo ${item}",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.CENTER,
-            textColor: Colors.white,
-            backgroundColor: Colors.lightBlue);
-      },
-    ),
-  ));
+class FavoriteCity extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _FavoriteCityState();
+  }
 }
 
-List<String> getListElements() {
-  var items = List<String>.generate(100, (index) => "Item ${index}");
-  return items;
-}
+class _FavoriteCityState extends State<FavoriteCity> {
+  String nameCity = "";
 
-Widget getListView() {
-  var listItems = getListElements();
-
-  var listview = ListView.builder(
-    itemBuilder: (BuildContext context, int index) {
-      return ListTile(
-        leading: Icon(Icons.arrow_right),
-        title: Text(listItems[index]),
-        onTap: () {
-          /*Fluttertoast.showToast(
-              msg: "${listItems[index]} was tapped",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.SNACKBAR,
-              textColor: Colors.white,
-              backgroundColor: Colors.lightBlue);*/
-          showSnackBar(context, listItems[index]);
-        },
-      );
-    },
-  );
-  return listview;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text(("Stateful Widget"))),
+      body: Container(
+        margin: EdgeInsets.all(20.0),
+        child: Column(
+          children: [
+            TextField(
+               decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: "Enter City name",
+                labelText: "City name",
+              ),
+              onChanged: (String userInput) {
+                setState(() {
+                  nameCity = userInput;
+                });
+              },
+            ),
+            Padding(
+                padding: EdgeInsets.only(top: 10.0),
+                child: Text("Your city is $nameCity",
+                    style: TextStyle(fontSize: 20.0)))
+          ],
+        ),
+      ),
+    );
+  }
 }
