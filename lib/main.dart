@@ -1,3 +1,4 @@
+import 'dart:html';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -17,6 +18,8 @@ class FavoriteCity extends StatefulWidget {
 
 class _FavoriteCityState extends State<FavoriteCity> {
   String nameCity = "";
+  var _currencies = ['Rupees', 'Pounds', 'Dollars', 'Others'];
+  var _currentItemSelected = 'Dollars';
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +30,7 @@ class _FavoriteCityState extends State<FavoriteCity> {
         child: Column(
           children: [
             TextField(
-               decoration: InputDecoration(
+              decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 hintText: "Enter City name",
                 labelText: "City name",
@@ -38,13 +41,37 @@ class _FavoriteCityState extends State<FavoriteCity> {
                 });
               },
             ),
+            DropdownButton<String>(
+              items: _currencies.map((String value) {
+                return DropdownMenuItem<String>(
+                    value: value, child: Text(value));
+              }).toList(),
+
+              onChanged: (String? newValueSelected) {
+                return _onDropDownItemSelected(newValueSelected!);
+              },
+
+              value: _currentItemSelected,
+
+              hint: Text("Please select",
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 16.0
+              ),),
+            ),
             Padding(
                 padding: EdgeInsets.only(top: 10.0),
                 child: Text("Your city is $nameCity",
-                    style: TextStyle(fontSize: 20.0)))
+                    style: TextStyle(fontSize: 20.0))),
           ],
         ),
       ),
     );
+  }
+
+  void _onDropDownItemSelected(String newValueSelected) {
+    setState(() {
+      this._currentItemSelected = newValueSelected;
+    });
   }
 }
